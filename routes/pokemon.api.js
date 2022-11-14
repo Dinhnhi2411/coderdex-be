@@ -26,7 +26,7 @@ router.get("/", function (req, res, next) {
 
     let result = [];
 
-    const db = JSON.parse(fs.readFileSync("../db.json", "utf-8"));
+    const db = JSON.parse(fs.readFileSync("db.json", "utf-8"));
 
     const { data } = db;
 
@@ -72,7 +72,7 @@ router.get("/:pokemonId", (req, res, next) => {
       throw err;
     }
 
-    const db = JSON.parse(fs.readFileSync("../db.json", "utf-8"));
+    const db = JSON.parse(fs.readFileSync("db.json", "utf-8"));
     const { data } = db;
     let result;
 
@@ -123,7 +123,7 @@ router.post("/", (req, res, next) => {
     "water",
   ];
   try {
-    let db = JSON.parse(fs.readFileSync("../db.json", "utf-8"));
+    let db = JSON.parse(fs.readFileSync("db.json", "utf-8"));
     const { data } = db;
 
     const { name, url, types, id } = req.body;
@@ -169,7 +169,7 @@ router.post("/", (req, res, next) => {
     db.totalPokemons += 1;
     db.data = data;
 
-    fs.writeFileSync("../db.json", JSON.stringify(db));
+    fs.writeFileSync("db.json", JSON.stringify(db));
 
     res.status(200).send(newPokemon);
   } catch (error) {
@@ -201,7 +201,7 @@ router.put("/:pokemonId", (req, res, next) => {
   const allowUpdate = ["name", "types", "url"];
 
   try {
-    const db = JSON.parse(fs.readFileSync("../db.json", "utf-8"));
+    const db = JSON.parse(fs.readFileSync("db.json", "utf-8"));
     const { data } = db;
     const { pokemonId } = req.params;
     const { name, types } = req.body;
@@ -255,7 +255,7 @@ router.delete("/:pokemonId", (req, res, next) => {
   try {
     const { pokemonId } = req.params;
 
-    const db = JSON.parse(fs.readFileSync("../db.json", "utf-8"));
+    const db = JSON.parse(fs.readFileSync("db.json", "utf-8"));
     const { data } = db;
 
     const targetIndex = data.findIndex((pokemon) => pokemon.id === pokemonId);
@@ -268,7 +268,7 @@ router.delete("/:pokemonId", (req, res, next) => {
     // delete pokemon
     db.data = data.filter((pokemon) => pokemon.id !== pokemonId);
     // save to data
-    fs.writeFileSync("../db.json", JSON.stringify(db));
+    fs.writeFileSync("db.json", JSON.stringify(db));
     res.status(200).send({});
   } catch (error) {
     next(error);

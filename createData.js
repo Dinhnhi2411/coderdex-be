@@ -5,6 +5,7 @@ const createData = async () => {
   let data = JSON.parse(fs.readFileSync("db.json"));
 
   let newData = await csv().fromFile("pokemon.csv");
+  newData = new Set(newData)
   newData = Array.from(newData);
   newData = newData.slice(0, 721);
 
